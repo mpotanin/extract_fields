@@ -431,7 +431,7 @@ public:
 		//oSRS.SetFromUserInput(strProjRef);
 		poOutputDS->SetProjection(strProjRef);
 
-		poOutputDS->SetSpatialRef(poInputDS->GetSpatialRef());
+		//poOutputDS->SetSpatialRef(poInputDS->GetSpatialRef());
 		poOutputDS->SetGeoTransform(dblGeotransform);
 		poOutputDS->GetRasterBand(1)->SetNoDataValue(0);
 
