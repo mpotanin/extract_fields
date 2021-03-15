@@ -410,6 +410,27 @@ public:
 			poInputDS->GetRasterYSize(),
 			1, GDT_UInt32, 0);
 
+		/*
+		const char* strProjRef      = this->p_gdal_ds_->GetProjectionRef();
+
+	if (OGRERR_NONE == srs.SetFromUserInput(strProjRef)) return true;
+	else if (MPLFileSys::FileExists(MPLFileSys::RemoveExtension(this->raster_file_)+".prj"))
+	{
+		string prjFile		= MPLFileSys::RemoveExtension(this->raster_file_)+".prj";
+		if (OGRERR_NONE==srs.SetFromUserInput(prjFile.c_str())) return true;	
+	}
+	else if (MPLFileSys::FileExists(MPLFileSys::RemoveExtension(this->raster_file_)+".tab"))
+	{
+		string tabFile = MPLFileSys::RemoveExtension(this->raster_file_)+".tab";
+		if (ReadSpatialRefFromMapinfoTabFile(tabFile,srs)) return true;
+	}
+		*/
+
+		const char* strProjRef = poInputDS->GetProjectionRef();
+		//OGRSpatialReference oSRS;
+		//oSRS.SetFromUserInput(strProjRef);
+		poOutputDS->SetProjection(strProjRef);
+
 		poOutputDS->SetSpatialRef(poInputDS->GetSpatialRef());
 		poOutputDS->SetGeoTransform(dblGeotransform);
 		poOutputDS->GetRasterBand(1)->SetNoDataValue(0);
