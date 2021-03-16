@@ -61,6 +61,9 @@ int main(int nArgs, char* argv[])
 	std::vector<string> vecArgs;
 	for (int i = 0; i < nArgs; i++)
 		vecArgs.push_back(argv[i]);
+	GDALAllRegister();
+	OGRRegisterAll();
+	CPLSetConfigOption("OGR_ENABLE_PARTIAL_REPROJECTION", "YES");
 #endif
 
 	if (nArgs == 1)
@@ -81,8 +84,12 @@ int main(int nArgs, char* argv[])
 		
 	cout << "1. Gathering segment metadata ... ";
 	SegmentCatalogue oCatalogue;
-	oCatalogue.InitFromFiles(oOptionParser.GetOptionValue("-is"),
-										oOptionParser.GetOptionValue("-ic"));
+	if (!oCatalogue.InitFromFiles(oOptionParser.GetOptionValue("-is"),
+		oOptionParser.GetOptionValue("-ic")))
+	{
+		std::cout << "ERROR: SegmentCatalogue::InitFromFiles fail" << std::endl;
+		return 2;
+	}
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	std::cout << "done" << std::endl;
@@ -96,7 +103,7 @@ int main(int nArgs, char* argv[])
 	unsigned int nLastNotRemovedID = 0;
 
 	//debug
-	SegmentMeta* poSeg = oCatalogue.GetSegmentRef(674073);
+	//SegmentMeta* poSeg = oCatalogue.GetSegmentRef(674073);
 	//std::cout << poSeg->nArea << endl;
 	//std::cout << poSeg->nBorderLength << endl;
 	//std::cout << poSeg->nCropPixelsCount << endl;

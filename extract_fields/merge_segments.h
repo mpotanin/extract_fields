@@ -300,13 +300,6 @@ public:
 				dblWeakIncl = CalcWeakInclusiveness(poSeg, poNeighbourSeg);
 				dblStrongIncl = CalcStrongInclusiveness(poSeg, poNeighbourSeg);
 
-			
-				//debug
-				//if (poSeg->nID == 262201 && poNeighbourSeg->nID == 267420)
-				//{
-				//	std::cout << dblH << " " << dblWeakIncl << " " << dblStrongIncl << std::endl;
-				//}
-				//end-debug
 
 				if (dblStrongIncl > 0.5001)
 				{
@@ -320,12 +313,6 @@ public:
 							|| ((dblStrongIncl > 0.33) && (poNeighbourSeg->IsRoughlyCrop(true)))
 							)
 							bMerge = true;
-						//debug
-						//if (poSeg->nID == 262201 && poNeighbourSeg->nID == 267420)
-						//{
-						//	std::cout << bMerge <<" "<< poNeighbourSeg->IsRoughlyCrop(true)<< std::endl;
-						//}
-						//end-debug
 					}
 					else
 					{
@@ -698,16 +685,6 @@ protected:
 
 	float CalculateBorderHeightBetweenSegments(SegmentMeta* poSeg1, SegmentMeta* poSeg2)
 	{
-		//std::cout << poSeg1->nID << " " << poSeg2->nID << " " <<poSeg1->mapBorderHeightsByNeighbour.size() 
-		//	<<" " << poSeg2->mapBorderHeightsByNeighbour.size()<< endl;
-
-		//for (auto el : poSeg1->mapBorderHeightsByNeighbour)
-		//{
-		//	std::cout << el.second.size() << " ";
-		//}
-		//std::cout << endl;
-		//debug
-		//end-debug
 		if (poSeg1->mapBorderSegments.find(poSeg2->nID) == poSeg1->mapBorderSegments.end())
 			return 0;
 
@@ -725,32 +702,7 @@ protected:
 
 		return (*it);
 
-		/*
-		
-		if (poSeg2->mapNeighbours.find(poSeg1->nID) == poSeg2->mapNeighbours.end()) return 0;
-		poSeg1->mapBorderHeightsByNeighbour[poSeg2->nID].sort();
-		poSeg2->mapBorderHeightsByNeighbour[poSeg1->nID].sort();
 
-		//for (auto el : poSeg1->mapBorderHeightsByNeighbour[poSeg2->nID])
-		//	std::cout << el << " ";
-		//std::cout << endl;
-		//for (auto el : poSeg2->mapBorderHeightsByNeighbour[poSeg1->nID])
-		//	std::cout << el << " ";
-		//std::cout << endl;
-
-		list<float> listMergedHeights = poSeg1->mapBorderHeightsByNeighbour[poSeg2->nID];
-		list<float> listCopy = poSeg2->mapBorderHeightsByNeighbour[poSeg1->nID];
-		listMergedHeights.merge(listCopy);
-
-		//for (auto el : listMergedHeights)
-		//	std::cout << el << " ";
-		//std::cout << endl;
-
-		std::list<float>::iterator it = listMergedHeights.begin();
-		std::advance(it, (listMergedHeights.size()+1)/2);
-
-		return (*it);
-		*/
 	}
 
 	/*
