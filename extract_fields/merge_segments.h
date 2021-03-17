@@ -390,12 +390,15 @@ public:
 		if (MPLFileSys::FileExists(strOutputRaster))
 			MPLFileSys::FileDelete(strOutputRaster);
 
+		char **papszOptions = NULL;
+		papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "LZW");
+
 		GDALDataset* poOutputDS = (GDALDataset*)GDALCreate(
 			GDALGetDriverByName("GTiff"),
 			strOutputRaster.c_str(),
 			poInputDS->GetRasterXSize(),
 			poInputDS->GetRasterYSize(),
-			1, GDT_UInt32, 0);
+			1, GDT_UInt32, papszOptions);
 
 		/*
 		const char* strProjRef      = this->p_gdal_ds_->GetProjectionRef();
@@ -468,6 +471,7 @@ public:
 
 		GDALClose(poInputDS);
 		GDALClose(poOutputDS);
+		CSLDestroy(papszOptions);
 
 		return true;
 	}
